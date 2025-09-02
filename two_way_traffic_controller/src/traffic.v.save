@@ -1,0 +1,99 @@
+module traffic(clk,rst,n_light,s_light);
+input clk,rst;
+output reg [2:0]n_light,s_light;
+
+reg[1:0]state;
+reg[3:0]count;
+
+parameter n_green = 2'b00,
+          n_yellow = 2'b01,
+          s_green = 2'b10,
+          s_yellow = 2'b11;
+
+parameter green_time = 4'd10,
+          yellow_time = 4'd3;
+
+
+
+always@(posedge clk or negedge rst)
+begin
+         if(rst)
+                begin
+                     state <= n_green;
+                     count <= green_time;
+                end
+else
+begin
+          if(count == 0)
+          begin
+          case(state)
+                    n_green:begin
+                            state <= n_yellow;
+                            count <= yellow_time;
+                            end
+                    n_yellow:begin
+                             state <= s_green;
+                             count <= green_time;
+                             end
+                    s_green:begin
+                            state <= s_yellow;
+                            count <= yellow_time;
+                            end
+                    s_yellow:begin
+                             state <= n_green;
+                             count <= green_time;
+                             end
+                    default:begin
+                            state <= n_green;
+                            count <= green_time;
+                            end
+          endcase
+			 end
+          else begin
+              count <= count - 1;
+          end
+end
+end
+
+always@(*)
+begin
+          case(state)
+                    n_green:begin
+                            n_light = 3'b001;
+                            s_light = 3'b100;
+                            end
+                    n_yellow:begin
+                             n_light = 3'b010;
+                             s_light = 3'b100;
+                             end
+                    s_green:begin
+                            n_light = 3'b100;
+                            s_light = 3'b001;
+			    end
+                    s_yellow:begin
+                             n_light = 3'b100;
+                             s_light = 3'b010;
+                             end
+		    default:begin
+			    n_light = 3'b100;
+			    s_light = 3'b100;
+			    end
+          endcase
+end
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      
+
