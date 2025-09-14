@@ -25,7 +25,7 @@ The functionality is verified through simulation in **ISim** (Xilinx ISE).
 ### ✅ Waveform Result
 Simulation waveform will be shown here after adding the PNG file:
 
-![Waveform](sim/waveform_traffic.png)
+![Waveform](two_way_traffic_controller/sim/waveform_traffic.png)
 
 ## 🚀 How to Run
 1. Open **Xilinx ISE** or any Verilog simulator.  
